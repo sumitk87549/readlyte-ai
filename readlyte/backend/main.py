@@ -23,3 +23,7 @@ async def chat(request: ChatRequest):
     return {
         "response": response["messages"]["content"]
     }
+
+@app.get("/")
+def hello_world():
+    return "Hello World"
