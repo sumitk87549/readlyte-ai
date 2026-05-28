@@ -1,30 +1,25 @@
-    from fastapi import FastAPI
-    import ollama
+from fastapi import FastAPI
+import ollama
+from pydantic import BaseModel
 
-    app = FastAPI()
+app = FastAPI()
 
-    @app.post("/chat")
-    async def chat():
-        pass
+class ChatRequest(BaseModel):
+    message:str
 
-    # 
-# Gemma3:4b -good creative
-# cogito:8b - reasoned it is an AI
-# wizardlm2:7b - reasoned for AI then wrote a beautiful text on itself
-# granite4.1:3b - told something creative instantly
-# gemma3n:e2b - overall best
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-#     
+@app.post("/chat")
+async def chat(request: ChatRequest):
+
+    response = ollama.chat(
+        model='gemma3n:e2b',
+        messages=[
+            {
+                "role":"user",
+                "content":request.message
+            }
+        ]
+    )
+
+    return {
+        "response": response["messages"]["content"]
+    }
