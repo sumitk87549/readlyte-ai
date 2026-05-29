@@ -21,7 +21,7 @@ async def chat(request: ChatRequest):
     )
 
     return {
-        "response": response["messages"]["content"]
+        "response": response["message"]["content"]
     }
 
 @app.get("/")
